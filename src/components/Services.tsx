@@ -1,31 +1,33 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import SiteImage from './SiteImage';
+import { IMAGES } from '../data/images';
 
 const services = [
   {
     number: '01',
     title: 'Encimeras de cocina',
     description: 'Encimeras fabricadas a medida para adaptarse al espacio, al diseño y a las necesidades de cada cocina.',
-    image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=800&q=80',
+    image: IMAGES.servicios.cocinas,
   },
   {
     number: '02',
     title: 'Baños',
     description: 'Encimeras, lavabos y soluciones en piedra para crear baños funcionales y elegantes.',
-    image: 'https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=800&q=80',
+    image: IMAGES.servicios.banos,
   },
   {
     number: '03',
     title: 'Escaleras y peldaños',
     description: 'Fabricación, instalación y reparación de escaleras y peldaños de mármol y piedra.',
-    image: 'https://images.unsplash.com/photo-1562438668-bcf0ca6578f0?auto=format&fit=crop&w=800&q=80',
+    image: IMAGES.servicios.escaleras,
   },
   {
     number: '04',
     title: 'Reparación y restauración',
     description: 'Recuperamos superficies deterioradas, piezas rotas y mármoles antiguos mediante reparación, pulido y restauración.',
-    image: 'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?auto=format&fit=crop&w=800&q=80',
+    image: IMAGES.servicios.restauracion,
   },
 ];
 
@@ -57,9 +59,10 @@ export default function Services() {
               transition={{ duration: 0.6, delay: i * 0.1 + 0.2 }}
             >
               {/* Image */}
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                style={{ backgroundImage: `url('${service.image}')` }}
+              <SiteImage
+                image={service.image}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="transition-transform duration-700 ease-out group-hover:scale-[1.04]"
               />
               
               {/* Overlay */}

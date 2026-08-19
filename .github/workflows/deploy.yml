@@ -1,0 +1,58 @@
+name: Publicar en GitHub Pages
+
+# Cada cambio en la rama principal se publica solo. No hay que subir la
+# carpeta compilada al repositorio: se genera aquí en cada despliegue.
+on:
+  push:
+    branches: [main]
+  # Permite lanzar el despliegue a mano desde la pestaña Actions.
+  workflow_dispatch:
+
+# Permisos mínimos que necesita el despliegue de Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Si se empujan dos cambios seguidos, se publica el último y se cancela el
+# anterior en curso, para no dejar la web en un estado intermedio.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      # `npm ci` en lugar de `npm install`: instala exactamente las versiones
+      # del fichero de bloqueo, así el despliegue es reproducible.
+      - run: npm ci
+
+      # Falla el despliegue si hay un error de tipos, en lugar de publicar
+      # una web rota.
+      - run: npx tsc -b
+
+      - run: npm run build
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

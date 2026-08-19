@@ -73,17 +73,23 @@ export default function Footer() {
           <p className="text-xs text-stone-500">
             © {currentYear} Marbres Montseny. Todos los derechos reservados.
           </p>
-          <div className="flex gap-6">
-            <a href="#" className="text-xs text-stone-500 hover:text-stone-400 transition-colors">
-              Política de privacidad
-            </a>
-            <a href="#" className="text-xs text-stone-500 hover:text-stone-400 transition-colors">
-              Política de cookies
-            </a>
-            <a href="#" className="text-xs text-stone-500 hover:text-stone-400 transition-colors">
-              Aviso legal
-            </a>
-          </div>
+          {/*
+            PENDIENTE: textos legales.
+
+            Aquí iban tres enlaces que no llevaban a ninguna parte. Se han
+            retirado en lugar de dejarlos apuntando a "#", porque un enlace
+            roto en el pie transmite abandono.
+
+            Un negocio español con formulario de contacto necesita aviso legal,
+            política de privacidad y política de cookies, y redactarlos exige
+            datos fiscales reales de la empresa (razón social, NIF, domicilio y
+            correo de contacto) que no se pueden suponer. En cuanto Marbres
+            Montseny los facilite, se añaden como páginas y se enlazan desde
+            este mismo bloque.
+          */}
+          <p className="text-xs text-stone-600">
+            Vilalba Sasserra · Barcelona
+          </p>
         </div>
       </div>
     </footer>

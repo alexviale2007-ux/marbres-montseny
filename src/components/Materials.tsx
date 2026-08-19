@@ -1,35 +1,38 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import SiteImage from './SiteImage';
+import { IMAGES } from '../data/images';
 
+/*
+  Solo se listan los materiales confirmados por la empresa.
+
+  El brief es explícito: otros compactos se incorporan únicamente cuando estén
+  confirmados. Añadir una pestaña genérica obligaría a rellenarla con texto
+  provisional, y un "a confirmar según disponibilidad" en producción resta más
+  credibilidad de la que suma tener una pestaña más.
+*/
 const materials = [
   {
     id: 'marmol',
     name: 'Mármol Natural',
     description: 'Elegancia, personalidad y vetas únicas. El mármol natural aporta un carácter inimitable a cualquier superficie, con una belleza que solo la naturaleza puede crear.',
-    image: 'https://images.unsplash.com/photo-1618220048045-10a6dbdf83e0?auto=format&fit=crop&w=1200&q=80',
+    image: IMAGES.materiales.marmol,
     features: ['Vetas únicas', 'Elegancia natural', 'Acabados pulidos', 'Piezas irrepetibles'],
   },
   {
     id: 'granito',
     name: 'Granito',
     description: 'Resistencia y durabilidad para proyectos exigentes. El granito combina una estética sólida con una resistencia excepcional al uso diario.',
-    image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80',
+    image: IMAGES.materiales.granito,
     features: ['Alta resistencia', 'Durabilidad', 'Bajo mantenimiento', 'Variedad de tonos'],
   },
   {
     id: 'silestone',
     name: 'Silestone / Cuarzo',
     description: 'Una solución contemporánea para superficies de cocina y baño. Uniformidad de color, resistencia a manchas y un mantenimiento mínimo.',
-    image: 'https://images.unsplash.com/photo-1588854337236-6889d631faa8?auto=format&fit=crop&w=1200&q=80',
+    image: IMAGES.materiales.cuarzo,
     features: ['Superficie no porosa', 'Resistencia a manchas', 'Uniformidad', 'Colores diversos'],
-  },
-  {
-    id: 'compactos',
-    name: 'Otros Compactos',
-    description: 'Superficies técnicas de última generación para proyectos que exigen máximas prestaciones. Marcas y opciones a confirmar según disponibilidad.',
-    image: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=1200&q=80',
-    features: ['Máxima resistencia', 'Grandes formatos', 'Baja absorción', 'Diseño contemporáneo'],
   },
 ];
 
@@ -88,12 +91,16 @@ export default function Materials() {
             {/* Image */}
             <div className="relative aspect-[4/3] overflow-hidden">
               <motion.div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url('${activeMaterial.image}')` }}
+                className="absolute inset-0"
                 initial={{ scale: 1.05 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.6 }}
-              />
+              >
+                <SiteImage
+                  image={activeMaterial.image}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              </motion.div>
             </div>
 
             {/* Info */}

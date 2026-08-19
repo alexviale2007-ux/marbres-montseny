@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { Phone } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import SiteImage from './SiteImage';
+import { IMAGES } from '../data/images';
 
 export default function CtaSection() {
   const { ref, isVisible } = useScrollAnimation();
@@ -9,12 +11,7 @@ export default function CtaSection() {
     <section className="relative py-32 md:py-40 overflow-hidden" ref={ref}>
       {/* Background */}
       <div className="absolute inset-0">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1618220048045-10a6dbdf83e0?auto=format&fit=crop&w=2000&q=80')`,
-          }}
-        />
+        <SiteImage image={IMAGES.ctaFondo} sizes="100vw" />
         <div className="absolute inset-0 bg-graphite-dark/85" />
       </div>
 

@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import SiteImage from './SiteImage';
+import { IMAGES } from '../data/images';
 
 export default function Introduction() {
   const { ref, isVisible } = useScrollAnimation();
@@ -60,11 +62,9 @@ export default function Introduction() {
             animate={isVisible ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{
-                backgroundImage: `url('https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1000&q=80')`,
-              }}
+            <SiteImage
+              image={IMAGES.introduccion}
+              sizes="(max-width: 1024px) 100vw, 45vw"
             />
             <motion.div
               className="absolute inset-0 bg-graphite-dark"

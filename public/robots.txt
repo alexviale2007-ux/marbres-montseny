@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alexviale2007-ux.github.io/marbres-montseny/sitemap.xml

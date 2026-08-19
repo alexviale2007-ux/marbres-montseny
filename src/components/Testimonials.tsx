@@ -109,10 +109,20 @@ export default function Testimonials() {
             </button>
           </div>
 
-          {/* CTA */}
+          {/*
+            Enlace a la ficha del negocio en Google.
+
+            Antes apuntaba a "#". Se usa la búsqueda de Maps por nombre y
+            localidad en lugar de una URL de ficha concreta: no se conoce el
+            identificador real del listado, y una búsqueda sí resuelve
+            correctamente. Cuando se disponga de la URL directa de la ficha,
+            basta con sustituirla aquí.
+          */}
           <div className="mt-10">
             <a
-              href="#"
+              href="https://www.google.com/maps/search/?api=1&query=Marbres+Montseny+Vilalba+Sasserra"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-sm text-stone-500 underline underline-offset-4 hover:text-graphite-dark transition-colors"
             >
               Ver más opiniones en Google
