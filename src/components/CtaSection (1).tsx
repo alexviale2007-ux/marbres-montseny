@@ -12,7 +12,7 @@ export default function CtaSection() {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=2000&q=80')`,
+            backgroundImage: `url('https://images.unsplash.com/photo-1618220048045-10a6dbdf83e0?auto=format&fit=crop&w=2000&q=80')`,
           }}
         />
         <div className="absolute inset-0 bg-graphite-dark/85" />

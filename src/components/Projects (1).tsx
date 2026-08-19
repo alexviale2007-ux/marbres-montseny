@@ -7,13 +7,13 @@ const categories = ['TODOS', 'COCINAS', 'BAÑOS', 'ESCALERAS', 'RESTAURACIÓN'];
 
 const projects = [
   { id: 1, category: 'COCINAS', image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=900&q=80', title: 'Encimera cocina contemporánea', material: 'Piedra natural' },
-  { id: 2, category: 'BAÑOS', image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=900&q=80', title: 'Lavabo integrado', material: 'Mármol blanco' },
-  { id: 3, category: 'COCINAS', image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=900&q=80', title: 'Isla de cocina', material: 'Silestone' },
-  { id: 4, category: 'ESCALERAS', image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80', title: 'Escalera interior', material: 'Mármol' },
-  { id: 5, category: 'BAÑOS', image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=80', title: 'Encimera de baño', material: 'Granito' },
-  { id: 6, category: 'RESTAURACIÓN', image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=80', title: 'Restauración de superficie', material: 'Mármol clásico' },
-  { id: 7, category: 'COCINAS', image: 'https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=900&q=80', title: 'Cocina minimalista', material: 'Cuarzo compacto' },
-  { id: 8, category: 'BAÑOS', image: 'https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=900&q=80', title: 'Baño de diseño', material: 'Piedra natural' },
+  { id: 2, category: 'BAÑOS', image: 'https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=900&q=80', title: 'Lavabo integrado', material: 'Mármol blanco' },
+  { id: 3, category: 'COCINAS', image: 'https://images.unsplash.com/photo-1588854337236-6889d631faa8?auto=format&fit=crop&w=900&q=80', title: 'Isla de cocina', material: 'Silestone' },
+  { id: 4, category: 'ESCALERAS', image: 'https://images.unsplash.com/photo-1562438668-bcf0ca6578f0?auto=format&fit=crop&w=900&q=80', title: 'Escalera interior', material: 'Mármol' },
+  { id: 5, category: 'BAÑOS', image: 'https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=900&q=80', title: 'Encimera de baño', material: 'Granito' },
+  { id: 6, category: 'RESTAURACIÓN', image: 'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?auto=format&fit=crop&w=900&q=80', title: 'Restauración de superficie', material: 'Mármol clásico' },
+  { id: 7, category: 'COCINAS', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80', title: 'Cocina minimalista', material: 'Cuarzo compacto' },
+  { id: 8, category: 'BAÑOS', image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=900&q=80', title: 'Baño de diseño', material: 'Piedra natural' },
 ];
 
 export default function Projects() {
@@ -106,10 +106,7 @@ export default function Projects() {
           </AnimatePresence>
         </motion.div>
 
-        {/* Placeholder notice */}
-        <p className="text-center text-xs text-stone-400 mt-8 italic">
-          Imágenes de referencia. Se sustituirán por fotografías reales de proyectos de Marbres Montseny.
-        </p>
+
       </div>
 
       {/* Lightbox */}

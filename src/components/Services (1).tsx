@@ -13,19 +13,19 @@ const services = [
     number: '02',
     title: 'Baños',
     description: 'Encimeras, lavabos y soluciones en piedra para crear baños funcionales y elegantes.',
-    image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=800&q=80',
   },
   {
     number: '03',
     title: 'Escaleras y peldaños',
     description: 'Fabricación, instalación y reparación de escaleras y peldaños de mármol y piedra.',
-    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1562438668-bcf0ca6578f0?auto=format&fit=crop&w=800&q=80',
   },
   {
     number: '04',
     title: 'Reparación y restauración',
     description: 'Recuperamos superficies deterioradas, piezas rotas y mármoles antiguos mediante reparación, pulido y restauración.',
-    image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?auto=format&fit=crop&w=800&q=80',
   },
 ];
 
