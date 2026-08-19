@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone } from 'lucide-react';
+import Logo from './Logo';
 
 const navLinks = [
   { label: 'Inicio', href: '#inicio' },
@@ -44,9 +45,13 @@ export default function Header() {
         <div className="container-wide mx-auto px-6 lg:px-10">
           <div className="flex items-center justify-between h-20 lg:h-24">
             {/* Logo */}
-            <a href="#inicio" className="relative z-10">
+            <a href="#inicio" className="relative z-10 flex items-center gap-3">
+              <Logo
+                variant={scrolled ? 'flat' : 'light'}
+                className="w-8 h-8 lg:w-9 lg:h-9 shrink-0 transition-opacity duration-500"
+              />
               <span
-                className={`font-serif text-xl lg:text-2xl tracking-[0.15em] transition-colors duration-500 ${
+                className={`font-serif text-lg lg:text-2xl tracking-[0.15em] transition-colors duration-500 ${
                   scrolled ? 'text-graphite-dark' : 'text-marble-white'
                 }`}
               >

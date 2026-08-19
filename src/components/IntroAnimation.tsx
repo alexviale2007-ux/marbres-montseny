@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import Logo from './Logo';
 
 interface IntroAnimationProps {
   onComplete: () => void;
@@ -97,9 +98,22 @@ export default function IntroAnimation({ onComplete }: IntroAnimationProps) {
         {/* Logo reveal */}
         <div className="relative z-10 text-center">
           <motion.div
+            className="mx-auto mb-6 w-[110px] md:w-[130px]"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={
+              phase === 'text' || phase === 'exit'
+                ? { opacity: 1, scale: 1 }
+                : { opacity: 0, scale: 0.9 }
+            }
+            transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
+            <Logo variant="engraved" className="w-full h-auto" />
+          </motion.div>
+
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={phase === 'text' || phase === 'exit' ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             <p
               className="font-serif text-4xl md:text-5xl tracking-[0.2em] mb-2"
