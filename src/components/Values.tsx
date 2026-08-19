@@ -14,29 +14,55 @@ export default function Values() {
   return (
     <section className="section-padding bg-marble-ivory" ref={ref}>
       <div className="container-narrow mx-auto">
+        {/* Section line animation */}
+        <motion.div
+          className="h-[1px] bg-stone-300 mb-16"
+          initial={{ scaleX: 0 }}
+          animate={isVisible ? { scaleX: 1 } : {}}
+          transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
+          style={{ transformOrigin: 'left' }}
+        />
+
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
           {values.map((value, i) => (
             <motion.div
               key={value.number}
               className="group relative p-6 cursor-default"
-              initial={{ opacity: 0, y: 25 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
+              transition={{ duration: 0.6, delay: i * 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+              whileHover={{ y: -5 }}
             >
-              {/* Top line */}
-              <div className="h-[1px] bg-stone-300 mb-6 origin-left transition-transform duration-500 group-hover:scale-x-100 scale-x-50" />
+              {/* Animated top line */}
+              <motion.div
+                className="h-[2px] bg-graphite-dark mb-6"
+                initial={{ scaleX: 0 }}
+                animate={isVisible ? { scaleX: 1 } : {}}
+                transition={{ duration: 0.5, delay: i * 0.15 + 0.3 }}
+                style={{ transformOrigin: 'left' }}
+              />
               
-              <span className="font-serif text-4xl text-stone-300 transition-colors duration-400 group-hover:text-graphite-dark">
+              <motion.span
+                className="font-serif text-5xl text-stone-200 block transition-colors duration-500 group-hover:text-graphite-dark"
+                initial={{ opacity: 0, x: -10 }}
+                animate={isVisible ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.4, delay: i * 0.15 + 0.4 }}
+              >
                 {value.number}
-              </span>
+              </motion.span>
 
-              <h3 className="font-sans text-sm font-medium tracking-wide mt-4 mb-3 text-graphite-dark transition-transform duration-400 group-hover:translate-x-1">
+              <h3 className="font-sans text-sm font-medium tracking-wide mt-4 mb-3 text-graphite-dark transition-transform duration-400 group-hover:translate-x-2">
                 {value.title}
               </h3>
 
-              <p className="text-sm text-stone-500 leading-relaxed">
+              <p className="text-sm text-stone-500 leading-relaxed transition-opacity duration-400 group-hover:opacity-100 opacity-70">
                 {value.description}
               </p>
+
+              {/* Hover indicator */}
+              <motion.div
+                className="absolute bottom-0 left-6 right-6 h-[1px] bg-stone-300 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"
+              />
             </motion.div>
           ))}
         </div>

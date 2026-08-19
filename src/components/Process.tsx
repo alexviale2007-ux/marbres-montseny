@@ -31,12 +31,12 @@ export default function Process() {
         {/* Desktop: Horizontal Timeline */}
         <div className="hidden lg:block">
           <div className="relative">
-            {/* Line */}
+            {/* Animated Line */}
             <motion.div
-              className="absolute top-6 left-0 right-0 h-[1px] bg-stone-300"
+              className="absolute top-6 left-0 right-0 h-[2px] bg-gradient-to-r from-graphite-dark via-stone-400 to-stone-300"
               initial={{ scaleX: 0 }}
               animate={isVisible ? { scaleX: 1 } : {}}
-              transition={{ duration: 1.2, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 1.5, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
               style={{ transformOrigin: 'left' }}
             />
 
@@ -44,16 +44,27 @@ export default function Process() {
               {steps.map((step, i) => (
                 <motion.div
                   key={step.number}
-                  className="relative pt-14"
-                  initial={{ opacity: 0, y: 20 }}
+                  className="relative pt-14 group cursor-default"
+                  initial={{ opacity: 0, y: 30 }}
                   animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: i * 0.1 + 0.4 }}
+                  transition={{ duration: 0.5, delay: i * 0.12 + 0.5 }}
                 >
-                  {/* Dot */}
-                  <div className="absolute top-4 left-0 w-4 h-4 rounded-full border-2 border-stone-400 bg-marble-ivory" />
+                  {/* Animated Dot */}
+                  <motion.div
+                    className="absolute top-3 left-0 w-6 h-6 rounded-full border-2 border-graphite-dark bg-marble-ivory flex items-center justify-center"
+                    initial={{ scale: 0 }}
+                    animate={isVisible ? { scale: 1 } : {}}
+                    transition={{ delay: i * 0.12 + 0.6, type: 'spring', stiffness: 300 }}
+                  >
+                    <motion.div
+                      className="w-2 h-2 rounded-full bg-graphite-dark"
+                      animate={{ scale: [1, 1.3, 1] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+                    />
+                  </motion.div>
                   
                   <span className="text-xs text-stone-400 tracking-wider">{step.number}</span>
-                  <h4 className="font-sans text-sm font-medium text-graphite-dark mt-2 mb-2 tracking-wide">
+                  <h4 className="font-sans text-sm font-medium text-graphite-dark mt-2 mb-2 tracking-wide group-hover:translate-x-1 transition-transform duration-300">
                     {step.title}
                   </h4>
                   <p className="text-xs text-stone-500 leading-relaxed">
@@ -67,13 +78,13 @@ export default function Process() {
 
         {/* Mobile: Vertical Timeline */}
         <div className="lg:hidden">
-          <div className="relative pl-8">
+          <div className="relative pl-10">
             {/* Vertical Line */}
             <motion.div
-              className="absolute left-[7px] top-0 bottom-0 w-[1px] bg-stone-300"
+              className="absolute left-[11px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-graphite-dark to-stone-300"
               initial={{ scaleY: 0 }}
               animate={isVisible ? { scaleY: 1 } : {}}
-              transition={{ duration: 1, delay: 0.3 }}
+              transition={{ duration: 1.2, delay: 0.3 }}
               style={{ transformOrigin: 'top' }}
             />
 
@@ -82,12 +93,19 @@ export default function Process() {
                 <motion.div
                   key={step.number}
                   className="relative"
-                  initial={{ opacity: 0, x: -15 }}
+                  initial={{ opacity: 0, x: -20 }}
                   animate={isVisible ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.4, delay: i * 0.1 + 0.3 }}
+                  transition={{ duration: 0.5, delay: i * 0.1 + 0.4 }}
                 >
                   {/* Dot */}
-                  <div className="absolute -left-8 top-1 w-4 h-4 rounded-full border-2 border-stone-400 bg-marble-ivory" />
+                  <motion.div
+                    className="absolute -left-10 top-1 w-6 h-6 rounded-full border-2 border-graphite-dark bg-marble-ivory flex items-center justify-center"
+                    initial={{ scale: 0 }}
+                    animate={isVisible ? { scale: 1 } : {}}
+                    transition={{ delay: i * 0.1 + 0.5, type: 'spring', stiffness: 300 }}
+                  >
+                    <div className="w-2 h-2 rounded-full bg-graphite-dark" />
+                  </motion.div>
                   
                   <span className="text-xs text-stone-400 tracking-wider">{step.number}</span>
                   <h4 className="font-sans text-sm font-medium text-graphite-dark mt-1 mb-1 tracking-wide">

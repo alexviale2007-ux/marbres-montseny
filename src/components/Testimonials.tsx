@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
@@ -37,6 +37,12 @@ export default function Testimonials() {
   const next = () => setCurrent((c) => (c + 1) % testimonials.length);
   const prev = () => setCurrent((c) => (c - 1 + testimonials.length) % testimonials.length);
 
+  // Auto-advance
+  useEffect(() => {
+    const timer = setInterval(next, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section id="opiniones" className="section-padding" ref={ref}>
       <div className="container-narrow mx-auto">
@@ -58,10 +64,26 @@ export default function Testimonials() {
           animate={isVisible ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
+          {/* Big quote mark */}
+          <motion.div
+            className="text-8xl font-serif text-stone-200 leading-none mb-4"
+            animate={{ opacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            "
+          </motion.div>
+
           {/* Stars */}
           <div className="flex justify-center gap-1 mb-8">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} size={16} className="text-stone-400 fill-stone-400" />
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={isVisible ? { opacity: 1, scale: 1 } : {}}
+                transition={{ delay: 0.3 + i * 0.1, type: 'spring', stiffness: 300 }}
+              >
+                <Star size={16} className="text-stone-400 fill-stone-400" />
+              </motion.div>
             ))}
           </div>
 
@@ -70,18 +92,23 @@ export default function Testimonials() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={current}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.4 }}
+                initial={{ opacity: 0, x: 40 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -40 }}
+                transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className="text-center"
               >
                 <p className="font-serif text-xl md:text-2xl lg:text-3xl text-graphite-dark leading-relaxed italic mb-6">
                   "{testimonials[current].text}"
                 </p>
-                <p className="text-sm font-medium text-stone-500 tracking-wide uppercase">
+                <motion.p
+                  className="text-sm font-medium text-stone-500 tracking-wide uppercase"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
                   — {testimonials[current].author}
-                </p>
+                </motion.p>
               </motion.div>
             </AnimatePresence>
           </div>
@@ -90,19 +117,29 @@ export default function Testimonials() {
           <div className="flex items-center justify-center gap-6 mt-10">
             <button
               onClick={prev}
-              className="p-2 text-stone-400 hover:text-graphite-dark transition-colors"
+              className="p-3 text-stone-400 hover:text-graphite-dark transition-colors hover:scale-110 transform duration-200"
               aria-label="Anterior opinión"
             >
               <ChevronLeft size={24} />
             </button>
 
-            <span className="text-xs text-stone-400 tracking-wider">
-              {String(current + 1).padStart(2, '0')} / {String(testimonials.length).padStart(2, '0')}
-            </span>
+            {/* Progress dots */}
+            <div className="flex gap-2">
+              {testimonials.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrent(i)}
+                  className={`h-2 rounded-full transition-all duration-400 ${
+                    i === current ? 'w-8 bg-graphite-dark' : 'w-2 bg-stone-300 hover:bg-stone-400'
+                  }`}
+                  aria-label={`Opinión ${i + 1}`}
+                />
+              ))}
+            </div>
 
             <button
               onClick={next}
-              className="p-2 text-stone-400 hover:text-graphite-dark transition-colors"
+              className="p-3 text-stone-400 hover:text-graphite-dark transition-colors hover:scale-110 transform duration-200"
               aria-label="Siguiente opinión"
             >
               <ChevronRight size={24} />
