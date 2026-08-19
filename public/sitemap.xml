@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  La web es una sola página con navegación por anclas, así que el mapa declara
+  una única dirección. Los fragmentos (#servicios, #contacto…) no se indexan
+  por separado y no deben listarse como direcciones independientes.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://alexviale2007-ux.github.io/marbres-montseny/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

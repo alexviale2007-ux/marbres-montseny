@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!--
+    Marca de Marbres Montseny reducida a su mínima expresión.
+
+    Reutiliza el motivo de la animación de entrada: la superficie en grafito
+    partida por una línea de luz. A 16 píxeles un monograma de dos letras se
+    vuelve ilegible, mientras que este contraste sigue distinguiéndose en una
+    pestaña del navegador.
+  -->
+  <rect width="64" height="64" fill="#1c1a18"/>
+  <rect x="30" y="10" width="1.6" height="44" fill="#efece7"/>
+  <rect x="14" y="31" width="36" height="1" fill="#8a8580" opacity="0.55"/>
+</svg>

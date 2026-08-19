@@ -1,17 +1,19 @@
 import { motion } from 'framer-motion';
 import { ArrowDown, Phone } from 'lucide-react';
+import SiteImage from './SiteImage';
+import { IMAGES } from '../data/images';
 
 export default function Hero() {
   return (
     <section id="inicio" className="relative h-screen min-h-[700px] flex items-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=2000&q=80')`,
-          }}
-        />
+        {/*
+          Esta es la imagen más grande de la página y determina la métrica de
+          mayor contenido visible, por eso se marca como prioritaria: se
+          descarga sin diferir y con prioridad alta.
+        */}
+        <SiteImage image={IMAGES.hero} priority sizes="100vw" />
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-graphite-dark/70 via-graphite-dark/40 to-transparent" />
         <div className="absolute inset-0 bg-graphite-dark/20" />

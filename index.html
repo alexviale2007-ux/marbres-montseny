@@ -2,25 +2,82 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="theme-color" content="#1c1a18" />
+
     <title>Marbres Montseny | Marmolista en Vilalba Sasserra</title>
     <meta name="description" content="Marmolería a medida en Vilalba Sasserra. Encimeras de cocina y baño, mármol, granito, Silestone, escaleras, reparaciones y trabajos en piedra." />
-    <meta name="keywords" content="marmolista Vilalba Sasserra, marmolista Baix Montseny, encimeras de cocina, mármol Barcelona, Silestone, granito, piedra natural" />
+
+    <!--
+      La etiqueta de palabras clave la ignoran los buscadores desde hace años.
+      El posicionamiento local se apoya en el título, la descripción, el
+      contenido de la página y sobre todo en los datos estructurados del final.
+    -->
+    <link rel="canonical" href="https://alexviale2007-ux.github.io/marbres-montseny/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+
     <meta name="geo.region" content="ES-CT" />
     <meta name="geo.placename" content="Vilalba Sasserra" />
+
+    <!-- Tarjeta al compartir en redes y mensajería, que es como circulará el enlace. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Marbres Montseny" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content="Marbres Montseny | Marmolista en Vilalba Sasserra" />
+    <meta property="og:description" content="Encimeras de cocina y baño, escaleras y trabajos en mármol, granito y cuarzo compacto. Fabricación e instalación a medida en el Baix Montseny y Barcelona." />
+    <meta property="og:url" content="https://alexviale2007-ux.github.io/marbres-montseny/" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1200&h=630&q=78" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Cocina contemporánea con isla de piedra natural" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Marbres Montseny | Marmolista en Vilalba Sasserra" />
+    <meta name="twitter:description" content="Encimeras de cocina y baño, escaleras y trabajos en mármol, granito y cuarzo compacto. Fabricación e instalación a medida." />
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1200&h=630&q=78" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+    <!--
+      La fotografía de portada es el mayor elemento visible de la página.
+      Descubrirla exige descargar y ejecutar el JavaScript primero, así que se
+      anuncia aquí para que el navegador la pida en paralelo. El ancho debe
+      coincidir con una entrada del srcset del componente de imagen, o se
+      descargaría dos veces.
+    -->
+    <link
+      rel="preload"
+      as="image"
+      href="https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&w=1920&q=78&fit=crop"
+      fetchpriority="high"
+    />
+
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!--
+      Datos estructurados del negocio.
+
+      Es la pieza que permite a un buscador entender que se trata de una
+      marmolería con taller en Vilalba Sasserra y mostrarla en resultados
+      locales. Solo contiene información facilitada por la empresa: no se
+      inventan calle, correo, horarios concretos ni valoraciones.
+    -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
+      "@id": "https://alexviale2007-ux.github.io/marbres-montseny/#negocio",
       "name": "Marbres Montseny",
+      "url": "https://alexviale2007-ux.github.io/marbres-montseny/",
+      "image": "https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1200&q=78",
       "description": "Marmolería a medida en Vilalba Sasserra. Encimeras de cocina y baño, mármol, granito, Silestone, escaleras, reparaciones y trabajos en piedra.",
       "telephone": "+34600419998",
       "address": {
@@ -30,8 +87,21 @@
         "addressRegion": "Barcelona",
         "addressCountry": "ES"
       },
-      "areaServed": ["Vilalba Sasserra", "Baix Montseny", "Vallès", "Barcelona"],
-      "serviceType": ["Marmolería", "Encimeras de cocina", "Encimeras de baño", "Escaleras", "Restauración de mármol"]
+      "areaServed": [
+        { "@type": "Place", "name": "Vilalba Sasserra" },
+        { "@type": "Place", "name": "Baix Montseny" },
+        { "@type": "Place", "name": "Vallès" },
+        { "@type": "Place", "name": "Barcelona" }
+      ],
+      "knowsLanguage": ["ca", "es"],
+      "sameAs": ["https://www.instagram.com/marbresmontseny"],
+      "makesOffer": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Encimeras de cocina a medida" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Encimeras de baño y lavabos" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Escaleras y peldaños de piedra" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Reparación, pulido y restauración de mármol" } }
+      ],
+      "material": ["Mármol natural", "Granito", "Cuarzo compacto"]
     }
     </script>
   </body>

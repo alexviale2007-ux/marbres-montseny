@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import SiteImage from './SiteImage';
+import { IMAGES } from '../data/images';
 
 function InstagramIcon({ size = 20, className = '' }: { size?: number; className?: string }) {
   return (
@@ -11,12 +13,12 @@ function InstagramIcon({ size = 20, className = '' }: { size?: number; className
   );
 }
 
-const placeholderImages = [
-  'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=400&q=80',
-  'https://images.unsplash.com/photo-1588854337236-6889d631faa8?auto=format&fit=crop&w=400&q=80',
-];
+/*
+  No es el feed real de la cuenta: leerlo exige credenciales de servidor y
+  esta web es estática. Son recursos de marca que enlazan al perfil, y el
+  encabezado evita dar a entender que sean las últimas publicaciones.
+*/
+const tiles = IMAGES.instagram;
 
 export default function Instagram() {
   const { ref, isVisible } = useScrollAnimation();
@@ -39,13 +41,15 @@ export default function Instagram() {
             <InstagramIcon size={20} />
             <span className="text-sm font-medium tracking-wide">@marbresmontseny</span>
           </a>
-          <p className="text-stone-500 text-sm mt-2">Síguenos en Instagram</p>
+          <p className="text-stone-500 text-sm mt-2">
+            Síguenos para ver trabajos en curso
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {placeholderImages.map((img, i) => (
+          {tiles.map((tile, i) => (
             <motion.a
-              key={i}
+              key={tile.alt}
               href="https://www.instagram.com/marbresmontseny"
               target="_blank"
               rel="noopener noreferrer"
@@ -54,9 +58,10 @@ export default function Instagram() {
               animate={isVisible ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.4, delay: i * 0.08 + 0.2 }}
             >
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-[1.05]"
-                style={{ backgroundImage: `url('${img}')` }}
+              <SiteImage
+                image={tile}
+                sizes="(max-width: 768px) 50vw, 25vw"
+                className="transition-transform duration-500 group-hover:scale-[1.05]"
               />
               <div className="absolute inset-0 bg-graphite-dark/0 group-hover:bg-graphite-dark/30 transition-all duration-300 flex items-center justify-center">
                 <InstagramIcon size={24} className="text-marble-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
