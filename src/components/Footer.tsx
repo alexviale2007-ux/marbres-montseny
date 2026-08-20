@@ -1,4 +1,4 @@
-import { Phone } from 'lucide-react';
+import { Phone, Mail } from 'lucide-react';
 
 function InstagramIcon({ size = 14 }: { size?: number }) {
   return (
@@ -54,6 +54,13 @@ export default function Footer() {
               >
                 <Phone size={14} />
                 600 41 99 98
+              </a>
+              <a
+                href="mailto:marbresmontseny2015@gmail.com"
+                className="flex items-center gap-2 text-sm text-stone-400 hover:text-marble-white transition-colors break-all"
+              >
+                <Mail size={14} className="shrink-0" />
+                marbresmontseny2015@gmail.com
               </a>
               <a
                 href="https://www.instagram.com/marbresmontseny"

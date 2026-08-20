@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, MapPin, Clock, Send } from 'lucide-react';
+import { Phone, MapPin, Clock, Mail, Send, Loader2, AlertCircle } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 type ProjectType = 'cocina' | 'bano' | 'escalera' | 'reparacion' | 'otro' | '';
+type Status = 'idle' | 'sending' | 'sent' | 'error';
 
 interface FormData {
   name: string;
@@ -13,17 +14,22 @@ interface FormData {
   message: string;
 }
 
+const EMPTY_FORM: FormData = {
+  name: '',
+  phone: '',
+  email: '',
+  projectType: '',
+  message: '',
+};
+
 export default function Contact() {
   const { ref, isVisible } = useScrollAnimation();
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    phone: '',
-    email: '',
-    projectType: '',
-    message: '',
-  });
+  const [formData, setFormData] = useState<FormData>(EMPTY_FORM);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<Status>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+  // Campo trampa: los bots lo rellenan, las personas no lo ven
+  const [company, setCompany] = useState('');
 
   const validate = (): boolean => {
     const newErrors: Partial<Record<keyof FormData, string>> = {};
@@ -39,10 +45,32 @@ export default function Contact() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate()) {
-      setSubmitted(true);
+    if (!validate() || status === 'sending') return;
+
+    setStatus('sending');
+    setErrorMessage('');
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, company }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error ?? 'No se pudo enviar el mensaje');
+      }
+
+      setStatus('sent');
+      setFormData(EMPTY_FORM);
+    } catch (err) {
+      setStatus('error');
+      setErrorMessage(
+        err instanceof Error ? err.message : 'No se pudo enviar el mensaje'
+      );
     }
   };
 
@@ -53,11 +81,16 @@ export default function Contact() {
     }
   };
 
+  const fieldClass = (hasError: boolean) =>
+    `w-full px-0 py-4 bg-transparent border-b text-graphite-dark placeholder:text-stone-400 focus:outline-none transition-colors ${
+      hasError ? 'border-red-400' : 'border-stone-300 focus:border-graphite-dark'
+    }`;
+
   return (
     <section id="contacto" className="section-padding" ref={ref}>
       <div className="container-narrow mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
-          {/* Info */}
+          {/* Datos de contacto */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -75,6 +108,19 @@ export default function Contact() {
                   <p className="text-xs text-stone-400 uppercase tracking-wider mb-1">Teléfono</p>
                   <a href="tel:+34600419998" className="text-graphite-dark font-medium hover:underline">
                     600 41 99 98
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <Mail size={18} className="text-stone-400 mt-1 shrink-0" />
+                <div>
+                  <p className="text-xs text-stone-400 uppercase tracking-wider mb-1">Email</p>
+                  <a
+                    href="mailto:marbresmontseny2015@gmail.com"
+                    className="text-graphite-dark hover:underline break-all"
+                  >
+                    marbresmontseny2015@gmail.com
                   </a>
                 </div>
               </div>
@@ -99,76 +145,81 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Form */}
+          {/* Formulario */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            {submitted ? (
-              <div className="flex items-center justify-center h-full min-h-[400px]">
+            {status === 'sent' ? (
+              <motion.div
+                className="flex items-center justify-center h-full min-h-[400px]"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
                 <div className="text-center">
                   <div className="w-16 h-16 border border-stone-300 rounded-full flex items-center justify-center mx-auto mb-6">
                     <Send size={24} className="text-stone-500" />
                   </div>
                   <h3 className="font-serif text-2xl text-graphite-dark mb-3">Gracias.</h3>
-                  <p className="text-stone-600 max-w-sm">
+                  <p className="text-stone-600 max-w-sm mx-auto">
                     Hemos recibido tu solicitud y nos pondremos en contacto contigo.
                   </p>
+                  <button
+                    type="button"
+                    onClick={() => setStatus('idle')}
+                    className="mt-8 text-sm text-stone-500 underline underline-offset-4 hover:text-graphite-dark transition-colors"
+                  >
+                    Enviar otra solicitud
+                  </button>
                 </div>
-              </div>
+              </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5" noValidate>
-                {/* Name */}
                 <div>
                   <input
                     type="text"
                     placeholder="Nombre *"
+                    autoComplete="name"
                     value={formData.name}
                     onChange={(e) => handleChange('name', e.target.value)}
-                    className={`w-full px-0 py-4 bg-transparent border-b text-graphite-dark placeholder:text-stone-400 focus:outline-none transition-colors ${
-                      errors.name ? 'border-red-400' : 'border-stone-300 focus:border-graphite-dark'
-                    }`}
+                    className={fieldClass(!!errors.name)}
                   />
-                  {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
+                  {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                 </div>
 
-                {/* Phone */}
                 <div>
                   <input
                     type="tel"
                     placeholder="Teléfono *"
+                    autoComplete="tel"
                     value={formData.phone}
                     onChange={(e) => handleChange('phone', e.target.value)}
-                    className={`w-full px-0 py-4 bg-transparent border-b text-graphite-dark placeholder:text-stone-400 focus:outline-none transition-colors ${
-                      errors.phone ? 'border-red-400' : 'border-stone-300 focus:border-graphite-dark'
-                    }`}
+                    className={fieldClass(!!errors.phone)}
                   />
-                  {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
+                  {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
                 </div>
 
-                {/* Email */}
                 <div>
                   <input
                     type="email"
                     placeholder="Email *"
+                    autoComplete="email"
                     value={formData.email}
                     onChange={(e) => handleChange('email', e.target.value)}
-                    className={`w-full px-0 py-4 bg-transparent border-b text-graphite-dark placeholder:text-stone-400 focus:outline-none transition-colors ${
-                      errors.email ? 'border-red-400' : 'border-stone-300 focus:border-graphite-dark'
-                    }`}
+                    className={fieldClass(!!errors.email)}
                   />
-                  {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
+                  {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                 </div>
 
-                {/* Project Type */}
                 <div>
                   <select
                     value={formData.projectType}
                     onChange={(e) => handleChange('projectType', e.target.value)}
-                    className={`w-full px-0 py-4 bg-transparent border-b text-graphite-dark focus:outline-none transition-colors appearance-none cursor-pointer ${
-                      errors.projectType ? 'border-red-400' : 'border-stone-300 focus:border-graphite-dark'
-                    } ${!formData.projectType ? 'text-stone-400' : ''}`}
+                    className={`${fieldClass(!!errors.projectType)} appearance-none cursor-pointer ${
+                      !formData.projectType ? 'text-stone-400' : ''
+                    }`}
                   >
                     <option value="" disabled>Tipo de proyecto *</option>
                     <option value="cocina">Cocina</option>
@@ -177,10 +228,11 @@ export default function Contact() {
                     <option value="reparacion">Reparación</option>
                     <option value="otro">Otro</option>
                   </select>
-                  {errors.projectType && <p className="text-red-400 text-xs mt-1">{errors.projectType}</p>}
+                  {errors.projectType && (
+                    <p className="text-red-500 text-xs mt-1">{errors.projectType}</p>
+                  )}
                 </div>
 
-                {/* Message */}
                 <div>
                   <textarea
                     placeholder="Cuéntanos sobre tu proyecto..."
@@ -191,10 +243,60 @@ export default function Contact() {
                   />
                 </div>
 
-                {/* Submit */}
-                <button type="submit" className="btn-primary mt-6 w-full sm:w-auto justify-center">
-                  Solicitar presupuesto
-                  <Send size={16} />
+                {/* Trampa antispam: oculta para las personas */}
+                <input
+                  type="text"
+                  name="company"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                  aria-hidden="true"
+                  className="absolute left-[-9999px] w-px h-px opacity-0"
+                />
+
+                {status === 'error' && (
+                  <motion.div
+                    className="flex items-start gap-3 p-4 bg-red-50 border border-red-200"
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    <AlertCircle size={18} className="text-red-500 mt-0.5 shrink-0" />
+                    <div className="text-sm">
+                      <p className="text-red-700 font-medium">{errorMessage}</p>
+                      <p className="text-red-600/80 mt-1">
+                        Puedes llamarnos al{' '}
+                        <a href="tel:+34600419998" className="underline font-medium">
+                          600 41 99 98
+                        </a>{' '}
+                        o escribirnos a{' '}
+                        <a
+                          href="mailto:marbresmontseny2015@gmail.com"
+                          className="underline font-medium break-all"
+                        >
+                          marbresmontseny2015@gmail.com
+                        </a>
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={status === 'sending'}
+                  className="btn-primary mt-6 w-full sm:w-auto justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {status === 'sending' ? (
+                    <>
+                      Enviando
+                      <Loader2 size={16} className="animate-spin" />
+                    </>
+                  ) : (
+                    <>
+                      Solicitar presupuesto
+                      <Send size={16} />
+                    </>
+                  )}
                 </button>
               </form>
             )}
